@@ -1,0 +1,16 @@
+.start-panel {
+	background-color: #c8a2c8;
+	color: var(--font-color);
+	display: flex;
+	flex-direction: column;
+	height: 50%;
+	width: 50%;
+	border-radius: 15px;
+	border: 2px solid white;
+}
+
+.user-options {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}

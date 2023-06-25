@@ -1,0 +1,30 @@
+.main {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.langs {
+	display: flex;
+}
+
+.langs button {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 0.5rem;
+}
+
+.langs button img {
+	width: 3rem;
+	height: 3rem;
+}
+
+.active {
+	border: 3px solid greenyellow;
+}
