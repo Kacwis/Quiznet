@@ -1,0 +1,110 @@
+.menu {
+	width: 70%;
+	padding: 0rem 2.5rem;
+	display: flex;
+	max-height: 70vh;
+	flex-direction: column;
+}
+
+.controls-account {
+	display: flex;
+	flex-direction: column;
+}
+
+.your-games {
+	width: 30%;
+}
+
+.games-list ul {
+	list-style: none;
+	padding: 0;
+}
+
+.game-list-item {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
+	border: 3px solid var(--dark-pink-color);
+	border-radius: 8px;
+	padding: 0.2rem 0.75rem;
+	margin: 0.5rem 0;
+}
+
+.opponent {
+	display: flex;
+	align-items: center;
+}
+
+.opponent p {
+	font-size: 1.25rem;
+	margin: 0;
+	margin-left: 0.5rem;
+}
+
+.opponent img {
+	width: 3rem;
+	border-radius: 10px;
+}
+
+.username {
+	font-size: 1.5rem;
+	letter-spacing: 1px;
+	font-weight: 500;
+	margin-right: 1rem;
+}
+
+.account-info {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.account-info-inner {
+	display: flex;
+	align-items: center;
+}
+
+.auth-controls i {
+	margin: 0 0.5rem;
+}
+
+.logged-options a {
+	border: 3px solid #555;
+	background-color: var(--dark-pink-color);
+	border-radius: 10%;
+	font-size: 1.5rem;
+	font-weight: 500;
+	padding: 0.6rem 1rem;
+	margin: 0 1rem;
+	transition: box-shadow 0.2s ease-in-out;
+	text-decoration: none;
+	color: aliceblue;
+}
+
+.game-controls-btn {
+	border: 3px solid #555;
+	background-color: var(--dark-pink-color);
+	border-radius: 10%;
+	font-size: 1.5rem;
+	font-weight: 500;
+	padding: 0.6rem 1rem;
+	margin: 0 1rem;
+	transition: box-shadow 0.2s ease-in-out;
+}
+
+.game-controls-btn:hover {
+	border-color: var(--pink-color);
+	box-shadow: 1px 18px 47px -11px rgba(200, 162, 200, 1);
+}
+
+.game-controls {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 2rem;
+}
+
+.ranking-games {
+	display: flex;
+	justify-content: space-between;
+}

@@ -3,30 +3,39 @@ import LanguageContext from "./language-context";
 import { DICTIONARY as en } from "../constants/en";
 import { DICTIONARY as pl } from "../constants/pl";
 
-const LanguageProvider = (props) => {
+import PropTypes from "prop-types";
+
+const LanguageProvider = ({ children }) => {
 	const [activeLang, setActiveLang] = useState("en");
-	const [langDict, setLangDict] = useState(en);
+	const [dictionary, setDictionary] = useState(en);
+
+	useEffect(() => {
+		if (activeLang === "en") {
+			setDictionary(en);
+		} else if (activeLang === "pl") {
+			setDictionary(pl);
+		}
+	}, [activeLang]);
 
 	const setActiveLangHandler = (lang) => {
 		setActiveLang(lang);
 	};
 
-	useEffect(() => {
-		const dictionary = activeLang === "pl" ? pl : en;
-		setLangDict(dictionary);
-	}, [activeLang]);
-
 	const context = {
 		activeLang,
+		dictionary,
 		setActiveLang: setActiveLangHandler,
-		langDict,
 	};
 
 	return (
 		<LanguageContext.Provider value={context}>
-			{props.children}
+			{children}
 		</LanguageContext.Provider>
 	);
+};
+
+LanguageProvider.propTypes = {
+	children: PropTypes.node,
 };
 
 export default LanguageProvider;

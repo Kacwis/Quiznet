@@ -1,6 +1,15 @@
 export const DICTIONARY = {
-	logIn: "log in",
+	logIn: "Log in",
 	startPlaying: "Start playing!",
-	playAsQuest: "Play as Quest!",
-	signIn: "Sign in",
+	playAsGuest: "Play as Guest!",
+	signIn: "Sign up",
+	or: "OR",
+	password: "Password",
+	email: "E-mail",
+	cancel: "Cancel",
+	username: "Username",
+	wrongLoginError: "Username or password is invalid!",
+	searchRandom: "Search random",
+	playWithFriend: "Play with friend",
+	chooseCategory: "Choose Category",
 };

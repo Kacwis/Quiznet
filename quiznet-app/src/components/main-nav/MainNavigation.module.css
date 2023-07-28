@@ -3,6 +3,9 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+	position: relative;
+	top: 2.5rem;
+	right: 20%;
 }
 
 .langs {

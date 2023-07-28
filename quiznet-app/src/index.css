@@ -8,8 +8,6 @@
 
 	color-scheme: light dark;
 	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
-
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -17,15 +15,9 @@
 	-webkit-text-size-adjust: 100%;
 
 	--font-color: #333;
-}
-
-a {
-	font-weight: 500;
-	color: #646cff;
-	text-decoration: inherit;
-}
-a:hover {
-	color: #535bf2;
+	--dark-pink-color: #9e569e;
+	--pink-color: #c8a2c8;
+	--background-color: #ededed;
 }
 
 h1 {
@@ -43,6 +35,109 @@ button:hover {
 	justify-content: center;
 	height: 75vh;
 	width: 100%;
+}
+
+.layout {
+	background-image: url("https://th.bing.com/th/id/OIG.m1YZNZ7YuwmmzmnwVokH?pid=ImgGn");
+	background-size: cover;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.layout::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.central-panel {
+	background-color: rgba(68, 68, 68, 0.9);
+	background-color: #edededd3;
+	color: var(--font-color);
+	display: flex;
+	flex-direction: column;
+	border-radius: 15%;
+	position: relative;
+	top: 10%;
+	outline: 5px solid var(--dark-pink-color);
+	box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px,
+		rgba(255, 255, 255, 0.12) 0px -12px 30px,
+		rgba(255, 255, 255, 0.12) 0px 4px 6px,
+		rgba(255, 255, 255, 0.17) 0px 12px 13px,
+		rgba(255, 255, 255, 0.09) 0px -3px 5px;
+}
+
+.loading-spinner {
+	display: inline-block;
+	position: relative;
+	width: 40px;
+	height: 40px;
+}
+
+.loading-spinner-inner {
+	display: inline-block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 30px;
+	height: 30px;
+	border: 3px solid #ccc;
+	border-top-color: #888;
+	border-radius: 50%;
+	animation: spinner-rotate 1s infinite linear;
+}
+
+.backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: 20;
+	background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+	position: fixed;
+	top: 20vh;
+	left: calc(50% - 25rem);
+	width: 50rem;
+	height: 55vh;
+	background-color: var(--background-color);
+	padding: 1rem;
+	border-radius: 10%;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+	z-index: 30;
+	animation: slide-down 300ms ease-out forwards;
+}
+
+@keyframes slide-down {
+	from {
+		opacity: 0;
+		transform: translateY(-3rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes spinner-rotate {
+	0% {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	100% {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
 }
 
 @media (prefers-color-scheme: light) {
