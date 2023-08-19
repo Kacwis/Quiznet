@@ -91,6 +91,32 @@ namespace quiznet_api.Migrations
                     b.ToTable("Answers");
                 });
 
+            modelBuilder.Entity("quiznet_api.Models.BlockedPlayer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BlockedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("BlockingPlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlayerBlockedId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlockingPlayerId");
+
+                    b.HasIndex("PlayerBlockedId");
+
+                    b.ToTable("BlockedPlayers");
+                });
+
             modelBuilder.Entity("quiznet_api.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -110,6 +136,32 @@ namespace quiznet_api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("quiznet_api.Models.Friendship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Friendships");
                 });
 
             modelBuilder.Entity("quiznet_api.Models.Game", b =>
@@ -164,6 +216,39 @@ namespace quiznet_api.Migrations
                     b.ToTable("Rounds");
                 });
 
+            modelBuilder.Entity("quiznet_api.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SendAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("quiznet_api.Models.Player", b =>
                 {
                     b.Property<int>("Id")
@@ -171,6 +256,12 @@ namespace quiznet_api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AvatarId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastOnline")
                         .HasColumnType("datetime2");
@@ -307,6 +398,44 @@ namespace quiznet_api.Migrations
                         .HasForeignKey("QuestionId");
                 });
 
+            modelBuilder.Entity("quiznet_api.Models.BlockedPlayer", b =>
+                {
+                    b.HasOne("quiznet_api.Models.Player", "BlockingPlayer")
+                        .WithMany("BlockedPlayers")
+                        .HasForeignKey("BlockingPlayerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("quiznet_api.Models.Player", "PlayerBlocked")
+                        .WithMany("BlockedByPlayers")
+                        .HasForeignKey("PlayerBlockedId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("BlockingPlayer");
+
+                    b.Navigation("PlayerBlocked");
+                });
+
+            modelBuilder.Entity("quiznet_api.Models.Friendship", b =>
+                {
+                    b.HasOne("quiznet_api.Models.Player", "Receiver")
+                        .WithMany("FriendshipsIncoming")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("quiznet_api.Models.Player", "Sender")
+                        .WithMany("FriendshipsOutgoing")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("quiznet_api.Models.GameRound", b =>
                 {
                     b.HasOne("quiznet_api.Models.Category", "Category")
@@ -324,6 +453,25 @@ namespace quiznet_api.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("quiznet_api.Models.Message", b =>
+                {
+                    b.HasOne("quiznet_api.Models.Player", "Receiver")
+                        .WithMany("MessagesIncoming")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("quiznet_api.Models.Player", "Sender")
+                        .WithMany("MessagesOutgoing")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("quiznet_api.Models.Player", b =>
@@ -379,6 +527,21 @@ namespace quiznet_api.Migrations
             modelBuilder.Entity("quiznet_api.Models.GameRound", b =>
                 {
                     b.Navigation("PlayerAnswers");
+                });
+
+            modelBuilder.Entity("quiznet_api.Models.Player", b =>
+                {
+                    b.Navigation("BlockedByPlayers");
+
+                    b.Navigation("BlockedPlayers");
+
+                    b.Navigation("FriendshipsIncoming");
+
+                    b.Navigation("FriendshipsOutgoing");
+
+                    b.Navigation("MessagesIncoming");
+
+                    b.Navigation("MessagesOutgoing");
                 });
 
             modelBuilder.Entity("quiznet_api.Models.Question", b =>

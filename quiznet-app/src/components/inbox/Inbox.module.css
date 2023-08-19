@@ -1,0 +1,143 @@
+.main {
+	width: 60%;
+	height: 60%;
+	top: 20%;
+	left: 20%;
+	color: var(--font-color);
+}
+
+.inbox-controls {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.inbox-inner {
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+
+.chats-list {
+	border-radius: 13px;
+	width: 30%;
+	margin-left: 2rem;
+}
+
+.chats-list ul {
+	list-style: none;
+	padding: 0;
+}
+
+.chat-window {
+	height: 20rem;
+	margin-top: 2.5rem;
+	border: 2px solid var(--dark-pink-color);
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	overflow: auto;
+	padding: 1rem;
+}
+
+.chat {
+	width: 65%;
+	margin-left: 1rem;
+}
+
+.chat-list-item {
+	display: flex;
+	align-items: center;
+	border: 2px solid transparent;
+	border-radius: 10px;
+	padding: 0.5rem;
+	overflow: hidden;
+}
+
+.chat-list-item:hover {
+	border-color: var(--dark-pink-color);
+}
+
+.chat-list-item h4 {
+	margin: 0;
+	margin-bottom: 0.5rem;
+}
+
+.chat-list-item p {
+	margin: 0;
+	white-space: nowrap;
+}
+
+.chat-list-item-inner {
+	margin-left: 0.5rem;
+}
+
+.avatar {
+	width: 5rem;
+	border-radius: 50%;
+	margin-left: 0.25rem;
+}
+
+.send-msg {
+	margin-top: 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.send {
+	background-color: transparent;
+	border: 3px solid var(--dark-pink-color);
+	border-radius: 10px;
+	color: #444;
+	font-size: 1.25rem;
+	font-weight: 500;
+	padding: 0.3rem 1rem 0.25rem 1rem;
+	text-align: center;
+	background-color: rgb(158, 86, 158, 0.4);
+}
+
+.msg-input {
+	background-color: transparent;
+	font-size: 1.5rem;
+	margin: 0;
+	padding: 0.4rem 0.6rem;
+	width: 70%;
+	color: #444;
+}
+
+.msg-input:focus {
+	background-color: rgb(158, 86, 158, 0.3);
+	outline: none;
+}
+
+.message {
+	padding: 8px;
+	border-radius: 8px;
+	margin: 4px;
+	display: flex;
+	max-width: 70%;
+	flex-direction: column;
+}
+
+.msg-text {
+	align-self: flex-start;
+	margin: 0;
+}
+
+
+
+.msg-date {
+	align-self: flex-end;
+	margin: 0;
+}
+
+.user-message {
+	align-self: flex-start;
+	background-color: rgb(158, 86, 158, 0.6);
+}
+
+.receiver-message {
+	align-self: flex-end;
+	background-color: rgb(158, 86, 158, 0.3);
+}

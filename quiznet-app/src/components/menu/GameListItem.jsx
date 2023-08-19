@@ -3,22 +3,60 @@ import style from "./Menu.module.css";
 import AuthContext from "../../store/auth-context";
 
 import PropTypes from "prop-types";
+import {
+	getCurrentTurn,
+	getPlayersScoreInGame,
+} from "../../constants/Constants";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import LanguageContext from "../../store/language-context";
 
 const GameListItem = ({ game }) => {
-	const authContext = useContext(AuthContext);
+	const { loggedUser } = useContext(AuthContext);
+	console.log(game);
+
+	const { dictionary } = useContext(LanguageContext);
+
+	const opponentPlayer = game.players.find((p) => p.id !== loggedUser.id);
+
+	const { playerScore, opponentScore } = getPlayersScoreInGame(
+		game,
+		loggedUser
+	);
+
+	const isStarting = game.startingPlayerId === loggedUser.id;
+
+	const isPlayerTurn = getCurrentTurn(
+		game.rounds[game.rounds.length - 1],
+		isStarting
+	);
 
 	return (
 		<div className={style["game-list-item"]}>
 			<div className={style.opponent}>
-				<img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/49/4938f216e85152f6f85ee01c422e1ecdc9730dd1_full.jpg" />
-				<p>
-					{
-						game.players.find((p) => p.id !== authContext.loggedUser.id).user
-							.username
-					}
-				</p>
+				<p>{dictionary.you}</p>
+				<p>vs</p>
+				<p>{opponentPlayer.user.username}</p>
 			</div>
-			<p>{game.result}</p>
+			<div className={style["game-score"]}>
+				<p>{playerScore}</p>
+				<p>:</p>
+				<p>{opponentScore}</p>
+			</div>
+			{game.status === "IN_PROGRESS" && (
+				<div className={style["whose-turn"]}>
+					{isPlayerTurn ? (
+						<FontAwesomeIcon
+							icon={faPlay}
+							size="xl"
+							style={{ color: "var(--dark-pink-color" }}
+						/>
+					) : (
+						<FontAwesomeIcon icon={faClock} size="xl" />
+					)}
+				</div>
+			)}
 		</div>
 	);
 };

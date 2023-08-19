@@ -79,7 +79,7 @@ const LogInPanel = () => {
 				</div>
 				<div className={style["auth-buttons"]}>
 					<button type="submit">{dictionary.logIn}</button>
-					<button>{dictionary.cancel}</button>
+					<button onClick={() => navigate("/")}>{dictionary.cancel}</button>
 				</div>
 			</form>
 		</CentralPanel>

@@ -6,11 +6,16 @@ using quiznet_api.Models.DTO;
 using quiznet_api.Repository.IRepository;
 using quiznet_api.Services.IServices;
 using System.Net.WebSockets;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace quiznet_api.Services
 {
     public class GameService : IGameService
     {
+        private readonly int POINTS_FOR_THE_WIN = 10;
+
+        private readonly int POINTS_FOR_DRAW = 3;
+        
         private readonly IPlayerRepository _playerRepository;
 
         private readonly IGameRepository _gameRepository;
@@ -41,10 +46,20 @@ namespace quiznet_api.Services
         }
 
         
-        public async Task<ICollection<GameResponseDTO>> GetAllGames()
+        public async Task<ICollection<GameResponseDTO>> GetAllGameResponses()
         {
             var games = await _gameRepository.GetAllAsync();
             return _mapper.Map<ICollection<GameResponseDTO>>(games);
+        }
+
+        public async Task<Game> GetGameById(int gameId)
+        {
+            var game = await _gameRepository.GetAsync(g => g.Id == gameId);
+            if(game == null)
+            {
+                throw new Exception("Game not found!");
+            }
+            return game;
         }
 
         public async Task<Game> StartGameWithRandomPlayer(int playerId)
@@ -54,13 +69,17 @@ namespace quiznet_api.Services
             {
                 throw new Exception("There are no players with that id");
             }
-            var randomOpponent = await _playerRepository
-                .GetAsync(p => (p.LastOnline > DateTime.Now.AddDays(-2)) && (p.Id != playerId));
-                        
+            var allPotentialPlayers =
+                await _playerRepository.GetAllAsync(p => p.Id != player.Id && p.LastOnline > DateTime.Now.AddDays(-2));
+            var potentialOpponent = allPotentialPlayers.FirstOrDefault(p => !ArePlayersHaveCurrentGame(player, p));
+            if (potentialOpponent == null)
+            {
+                return null;    
+            }
             var newGame = new Game()
             {
                 Status = "IN_PROGRESS",
-                Players = new List<Player>() { player, randomOpponent },
+                Players = new List<Player>() { player, potentialOpponent },
                 Rounds = new List<GameRound>(),
                 StartingPlayerId = playerId
             };
@@ -68,35 +87,7 @@ namespace quiznet_api.Services
             await _gameRepository.SaveAsync();
             return createdGame;
         }
-        
-        public async Task<GameResponseDTO> GetGameById(int gameId)
-        {
-            var game = await _gameRepository.GetAsync(g => g.Id == gameId);
-            if(game == null)
-            {
-                throw new Exception("There is no game with that id");
-            }            
-            var gameResponse = _mapper.Map<GameResponseDTO>(game);
-            if (!game.Rounds.IsNullOrEmpty())
-            {
-                gameResponse.ActiveRound = _mapper.Map<GameRoundResponseDTO>(
-                    new List<GameRound>(game.Rounds)[game.Rounds.Count - 1]);
-            }
-            return gameResponse;
-        }
-
-
-        public async Task<List<GameResponseDTO>> GetActiveGamesByPlayerId(int playerId)
-        {
-            var player = await _playerRepository.GetAsync(p => p.Id == playerId);
-            if(player == null)
-            {
-                throw new Exception("There are no players with that id!");
-            }
-            var gamesList = new List<Game>(player.Games);
-            var filteredGames = new List<Game>(gamesList.Where(g => g.Status == "IN_PROGRESS"));
-            return _mapper.Map<List<GameResponseDTO>>(filteredGames);
-        }
+            
 
         public async Task<GameResponseDTO> AddRoundToGame(CreateGameRoundDTO gameRoundDTO, int gameId)
         {
@@ -187,15 +178,92 @@ namespace quiznet_api.Services
                 var createdPlayerAnswer = await CreatePlayerAnswer(playerAnswer);
                 round.PlayerAnswers.Add(createdPlayerAnswer);
             }
-            if(round.Game.Rounds.Count == 5) 
+            if(round.Game.Rounds.Count == 5)
             {
-                var game = await _gameRepository.GetAsync(g => g.Id == round.Game.Id);
-                if(game != null)
-                {
-                    game.Status = "FINISHED";
-                }                
+                await FinishGame(round.Game);
             }
             await _gameRoundRepository.SaveAsync();            
+        }
+
+        private async Task FinishGame(Game game)
+        {
+            game.Status = "FINISHED";
+            var player = game.Players.FirstOrDefault(p => p.Id == game.StartingPlayerId);
+            var opponent = game.Players.FirstOrDefault(p => !p.Equals(player));
+            var playerScore = GetScoreForPlayer(game, player);
+            var opponentScore = GetScoreForPlayer(game, opponent);
+            if (playerScore > opponentScore)
+            {
+                player.Score += 10;
+            }
+            else if (playerScore == opponentScore)
+            {
+                player.Score += 10;
+                opponent.Score += 10;
+            }
+            else
+            {
+                opponent.Score += 10;
+            }
+            await _gameRoundRepository.SaveAsync();
+        }
+
+        private int GetScoreForPlayer(Game game, Player player)
+        {
+            var allPlayerAnswers = new List<PlayerAnswer>();
+            var rounds = new List<GameRound>(game.Rounds);
+            rounds.ForEach(r => allPlayerAnswers.AddRange(r.PlayerAnswers.Where(p => p.Player.Equals(player))));
+            int score = 0;
+            allPlayerAnswers.ForEach(a =>
+            {
+                var selectedAnswer = a.Question.Answers.FirstOrDefault(answer => answer.Text == a.SelectedAnswer);
+                if (selectedAnswer.Id == a.Question.CorrectAnswerId) score++;
+            } );
+            return score;
+        }
+        
+
+        public async Task<GameResponseDTO> GetGameResponseDTO(Game game)
+        {
+            var gameResponseDTO = _mapper.Map<GameResponseDTO>(game);
+            gameResponseDTO.ActiveRound = _mapper.Map<GameRoundResponseDTO>(
+                await _gameRoundRepository.GetAsync(r => r.Id == game.CurrentRoundId));
+            return gameResponseDTO;
+        }
+
+        public async Task<Game> StartGameWithFriend(CreateFriendGameDTO createFriendGameDto)
+        {
+            var startingPlayer = await _playerRepository.GetAsync(p => p.Id == createFriendGameDto.StartingPlayerId);
+            var friend = await _playerRepository.GetAsync(p => p.Id == createFriendGameDto.FriendId);
+            if (startingPlayer == null || friend == null)
+            {
+                throw new Exception("There are no players with that ids");
+            }
+
+            var arePlayersInGame = ArePlayersHaveCurrentGame(startingPlayer, friend);
+            if (arePlayersInGame)
+            {
+                var game = await _gameRepository.GetAsync(g =>
+                    g.Players.Contains(startingPlayer) && g.Players.Contains(friend) && g.Status == "IN_PROGRESS");
+                return game;
+            }
+            
+            var newGame = new Game()
+            {
+                CreationDate = DateTime.Now,
+                Players = new List<Player>() { startingPlayer, friend },
+                Rounds = new List<GameRound>(),
+                StartingPlayerId = startingPlayer.Id,
+                Status = "IN_PROGRESS"
+            };
+            var createdGame = await _gameRepository.CreateAsync(newGame);
+            return createdGame;
+        }
+
+        public bool ArePlayersHaveCurrentGame(Player player, Player opponent)
+        {
+            var gamesTogether = player.Games.FirstOrDefault(g => g.Players.Contains(opponent) && g.Status == "IN_PROGRESS");
+            return gamesTogether != null;
         }
     }
 }

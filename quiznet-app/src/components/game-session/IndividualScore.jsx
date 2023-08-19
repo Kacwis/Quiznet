@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PlayerAnswerDisplay from "./PlayerAnswerDisplay";
 import { useState } from "react";
 
-const IndividualScore = ({ answers }) => {
+const IndividualScore = ({ answers, areAnswersBlocked }) => {
 	const [isAnswerDisplayVisible, setIsAnswerDisplayVisible] = useState(false);
 	const [currentAnswer, setCurrentAnswer] = useState(null);
 
@@ -19,9 +19,14 @@ const IndividualScore = ({ answers }) => {
 
 	const questionMarkersContent = answers.map((answer, index) => {
 		let className = style["question-marker"];
-		answer.isCorrect
-			? (className = `${className} ${style.correct}`)
-			: (className = `${className} ${style.incorrect}`);
+		if (areAnswersBlocked) {
+			className = `${className} ${style.blocked}`;
+		} else {
+			answer.isCorrect
+				? (className = `${className} ${style.correct}`)
+				: (className = `${className} ${style.incorrect}`);
+		}
+
 		return (
 			<div
 				key={index}
@@ -46,6 +51,7 @@ const IndividualScore = ({ answers }) => {
 
 IndividualScore.propTypes = {
 	answers: PropTypes.array,
+	areAnswersBlocked: PropTypes.bool,
 };
 
 export default IndividualScore;

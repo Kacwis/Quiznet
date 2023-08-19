@@ -2,8 +2,7 @@
 {
     public class LoginResponseDTO
     {
-
-        public LogInUserResponseDTO User { get; set; }
+        public PlayerResponseDTO User { get; set; }
 
         public string Token { get; set; }   
 

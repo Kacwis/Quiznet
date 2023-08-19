@@ -6,9 +6,11 @@ const Backdrop = () => {
 	return <div className={"backdrop"}></div>;
 };
 
-const ModalOverlay = ({ children }) => {
+const ModalOverlay = ({ children, className }) => {
+	const modalClassname = `modal ${className}`;
+
 	return (
-		<div className={"modal"}>
+		<div className={modalClassname}>
 			<div className={"content"}>{children}</div>
 		</div>
 	);
@@ -16,12 +18,12 @@ const ModalOverlay = ({ children }) => {
 
 const portalElement = document.getElementById("overlays");
 
-const Modal = ({ children }) => {
+const Modal = ({ children, className }) => {
 	return (
 		<>
 			{ReactDOM.createPortal(<Backdrop />, portalElement)}
 			{ReactDOM.createPortal(
-				<ModalOverlay>{children}</ModalOverlay>,
+				<ModalOverlay className={className}>{children}</ModalOverlay>,
 				portalElement
 			)}
 		</>
@@ -30,10 +32,12 @@ const Modal = ({ children }) => {
 
 ModalOverlay.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 };
 
 Modal.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 };
 
 export default Modal;

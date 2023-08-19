@@ -7,8 +7,12 @@ namespace quiznet_api.Repository.IRepository
     {
         bool IsUniqueUser(string username);
 
+        Task<User> Register(RegistrationRequestDTO registrationRequestDTO);
+
         Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO);
 
-        Task<User> Register(RegistrationRequestDTO registrationRequestDTO);
+        Task UpdateAsync(User user);
+
+        Task UpdatePassword(string password, User user);
     }
 }

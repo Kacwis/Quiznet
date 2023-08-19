@@ -10,24 +10,31 @@ import { useNavigate } from "react-router-dom";
 
 const GameControls = () => {
 	const [gameId, setGameId] = useState(null);
+	const [isErrorVisible, setIsErrorVisible] = useState(false);
 
 	const { dictionary } = useContext(LanguageContext);
 
 	const { status, error, data, sendRequest } = useHttp(startGameWithRandom);
 
-	const authContext = useContext(AuthContext);
+	const { token, loggedUser } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 
 	const randomGameClickHandler = () => {
-		sendRequest(authContext.loggedUser.id);
+		const requestData = { token, playerId: loggedUser.id };
+		setIsErrorVisible(false);
+		sendRequest(requestData);
 	};
 
 	const playWithFriendClickHandler = () => {};
 
 	useEffect(() => {
 		if (status === "completed" && !error) {
-			setGameId(data);
+			if (!data) {
+				setIsErrorVisible(true);
+				return;
+			}
+			setGameId(data.gameId);
 		}
 	}, [status, error, data, setGameId]);
 
@@ -39,6 +46,9 @@ const GameControls = () => {
 
 	return (
 		<div className={style["game-controls"]}>
+			{isErrorVisible && (
+				<p className={style["player-not-found"]}>There are currently no available players to play</p>
+			)}
 			<div className={style["logged-options"]}>
 				<GameControlsButton
 					text={dictionary.searchRandom}

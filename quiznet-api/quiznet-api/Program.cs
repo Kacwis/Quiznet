@@ -9,10 +9,12 @@ using quiznet_api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using quiznet_api.Handlers.IHandlers;
+using quiznet_api.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//  Database connection configuration
 
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
@@ -21,6 +23,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
+
+// Repositories
 
 builder.Services.AddScoped<IWordRepository, WordRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -31,13 +35,24 @@ builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IGameRoundRepository, GameRoundRepository>();
 builder.Services.AddScoped<IPlayerAnswerRepository, PlayerAnswerRepository>();
+builder.Services.AddScoped<IFriendshipRepository, FriendshipRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IBlockedPlayerRepository, BlockedPlayerRepository>();
+
+// Services
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IMessageService, MessageService>();  
+
+// Handlers
+
+builder.Services.AddScoped<IJwtHandler, JwtHandler>();
+
+// Authentication Configuration
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:SecretKey");
-
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -58,7 +73,6 @@ builder.Services.AddAuthentication(x =>
     });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -67,12 +81,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Cors configuration
 
 app.UseCors(x => x.AllowAnyMethod()
     .AllowAnyHeader()

@@ -51,7 +51,8 @@ const GameProvider = ({ children }) => {
 
 	const stopRoundHandler = () => {
 		setIsRoundInPlay(false);
-		getGameSendRequest(activeGame.id);
+		getGameSendRequest({ gameId: activeGame.id, token: authContext.token });
+		authContext.getMenuData();
 	};
 
 	const savePlayedRoundHandler = () => {
@@ -60,6 +61,7 @@ const GameProvider = ({ children }) => {
 				saveRoundSendRequest({
 					playerAnswers: activeRound.playerAnswers.slice(3),
 					roundId: activeRound.id,
+					token: authContext.token,
 				});
 				activeRound.playerAnswers = [];
 				return;
@@ -67,6 +69,7 @@ const GameProvider = ({ children }) => {
 			saveRoundSendRequest({
 				round: activeRound,
 				gameId: activeGame.id,
+				token: authContext.token,
 			});
 		}
 	};
@@ -76,7 +79,7 @@ const GameProvider = ({ children }) => {
 	};
 
 	const setGameByIdHandler = (gameId) => {
-		getGameSendRequest(gameId);
+		getGameSendRequest({ gameId: gameId, token: authContext.token });
 	};
 
 	const context = {

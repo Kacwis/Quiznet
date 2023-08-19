@@ -6,19 +6,16 @@ import { useContext } from "react";
 import LanguageContext from "../../store/language-context";
 import GameContext from "../../store/game-context";
 import AuthContext from "../../store/auth-context";
+import { getCurrentTurn } from "../../constants/Constants";
 
 const GameSessionRound = ({ gameRound }) => {
 	const { isStarting, startRound, activeRound, activeGame } =
 		useContext(GameContext);
-	const { activeLang } = useContext(LanguageContext);
+
+	const { activeLang, dictionary } = useContext(LanguageContext);
 	const { loggedUser } = useContext(AuthContext);
 
-	const isAnswersEmpty = activeRound && activeRound.playerAnswers.length === 0;
-
-	const isPlayerTurn =
-		activeRound && activeRound.roundNumber % 2 === 1
-			? isStarting ^ !isAnswersEmpty
-			: !(isStarting ^ !isAnswersEmpty);
+	const isPlayerTurn = getCurrentTurn(activeRound, isStarting);
 
 	const loggedPlayersAnswers = [];
 	const opponentAnswers = [];
@@ -49,7 +46,7 @@ const GameSessionRound = ({ gameRound }) => {
 		loggedPlayerScoreContent = isPlayerTurn ? (
 			<div className={style["play-or-wait-container"]}>
 				<button onClick={playClickHandler} className={style["play-btn"]}>
-					Play
+					{dictionary.play}
 				</button>
 			</div>
 		) : (
@@ -58,10 +55,10 @@ const GameSessionRound = ({ gameRound }) => {
 
 		opponentScoreContent = !isPlayerTurn ? (
 			<div className={style["play-or-wait-container"]}>
-				<p>Wait for opponent</p>
+				<p>{dictionary.waitForOpponent}</p>
 			</div>
 		) : (
-			<IndividualScore answers={opponentAnswers} />
+			<IndividualScore answers={opponentAnswers} areAnswersBlocked={true} />
 		);
 	}
 

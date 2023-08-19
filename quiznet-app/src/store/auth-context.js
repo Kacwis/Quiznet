@@ -2,10 +2,13 @@ import React from "react";
 
 const AuthContext = React.createContext({
 	isLoggedIn: false,
-	loggedUser: null, // guest / username
+	loggedUser: null,
 	token: null,
-	logIn: (logInInfo) => {},
+	menuData: { activeGames: [], finishedGames: [], friends: [] },
+	logIn: () => {},
 	logOut: () => {},
+	setUserData: () => {},
+	getMenuData: () => {},
 });
 
 export default AuthContext;

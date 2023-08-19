@@ -15,17 +15,19 @@ namespace quiznet_api
             CreateMap<Answer, CreateAnswerDTO>().ReverseMap();
             CreateMap<Player, GameResponsePlayerDTO>().ReverseMap();
             CreateMap<Player, PlayerAnswerPlayerResponseDTO>().ReverseMap();
+            CreateMap<Player, PlayerResponseDTO>().ReverseMap();
             CreateMap<GameRound, GameRoundResponseDTO>()
                 .ForMember(x => x.PlayerAnswers, opt => opt.MapFrom(x => x.PlayerAnswers));
             CreateMap<Game, GameResponseDTO>()
                 .ForMember(x => x.Players, opt => opt.MapFrom(x => x.Players))
-                .ForMember(x => x.Rounds, opt => opt.MapFrom(x => x.Rounds));
+                .ForMember(x => x.Rounds, opt => opt.MapFrom(x => x.Rounds));            
             CreateMap<PlayerAnswer, CreatePlayerAnswerDTO>().ReverseMap();
             CreateMap<PlayerAnswer, PlayerAnswerResponseDTO>()
                 .ForMember(x => x.Player, opt => opt.MapFrom(x => x.Player))
                 .ForMember(x => x.IsCorrect, opt => opt.MapFrom(src => IsCorrect(src)));
             CreateMap<GameRound, CreateGameRoundDTO>()
                 .ForMember(x => x.PlayerAnswers, opt => opt.MapFrom(x => x.PlayerAnswers));
+            
                
         }
 

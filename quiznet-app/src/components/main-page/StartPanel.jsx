@@ -15,7 +15,7 @@ const StartPanel = () => {
 			<div className={style["user-options"]}>
 				<div className={style["auth-options"]}>
 					<Link to="/log-in">{dictionary.logIn}</Link>
-					<Link to="/sign-up">{dictionary.signIn}</Link>
+					<Link to="/sign-up">{dictionary.signUp}</Link>
 				</div>
 				<div className={style.or}>
 					<p className={style.or}>{dictionary.or}</p>

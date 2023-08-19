@@ -188,3 +188,7 @@
 	background-color: var(--dark-pink-color);
 	z-index: -1;
 }
+
+.blocked {
+	pointer-events: none;
+}

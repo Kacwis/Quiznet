@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import CentralPanel from "../ui/CentralPanel";
 import style from "./GameSession.module.css";
 import GameSessionButtons from "./GameSessionButtons";
@@ -9,12 +9,8 @@ import GameSessionRound from "./GameSessionRound";
 import AuthContext from "../../store/auth-context";
 import GameContext from "../../store/game-context";
 import GameMain from "../game/GameMain";
-import PlayerAnswerDisplay from "./PlayerAnswerDisplay";
 
 const GameSessionMain = () => {
-	const [isAnswerDisplayVisible, setIsAnswerDisplayVisible] = useState(false);
-	const [answerToDisplay, setAnswerToDisplay] = useState(null);
-
 	const params = useParams();
 
 	const { startRound, isRoundInPlay, activeGame, setGameById } =
@@ -24,7 +20,7 @@ const GameSessionMain = () => {
 
 	useEffect(() => {
 		setGameById(params.gameId);
-	}, [params.gameId]);
+	}, [params.gameId, isRoundInPlay]);
 
 	if (activeGame === null) {
 		return (
@@ -79,7 +75,6 @@ const GameSessionMain = () => {
 				</>
 			)}
 			{isRoundInPlay && <GameMain />}
-			{isAnswerDisplayVisible && <PlayerAnswerDisplay />}
 		</CentralPanel>
 	);
 };
