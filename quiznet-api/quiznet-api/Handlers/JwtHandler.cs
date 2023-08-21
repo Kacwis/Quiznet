@@ -13,13 +13,6 @@ namespace quiznet_api.Handlers
 
         private static readonly int TIME_LEFT_TO_EXPIRE = 2;
 
-        private readonly IConfiguration _configuration;
-
-        public JwtHandler(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
         public int GetUserIdFromJwtToken(HttpContext httpContext)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -38,7 +31,10 @@ namespace quiznet_api.Handlers
 
         public string GenerateJwtToken(string audience, IEnumerable<Claim> claims, int expiryMinutes)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("ApiSettings:SecretKey")));
+            var secretKey = System.Environment.GetEnvironmentVariable("SECRET_KEY");
+            
+            System.Diagnostics.Debug.Write(secretKey);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var tokenOptions = new JwtSecurityToken(

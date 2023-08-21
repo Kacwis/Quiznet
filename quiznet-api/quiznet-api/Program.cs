@@ -9,18 +9,22 @@ using quiznet_api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using dotenv.net;
 using quiznet_api.Handlers.IHandlers;
 using quiznet_api.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotEnv.Load();
+
+
+
 //  Database connection configuration
 
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+    option.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
 });
-
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
@@ -52,7 +56,7 @@ builder.Services.AddScoped<IJwtHandler, JwtHandler>();
 
 // Authentication Configuration
 
-var key = builder.Configuration.GetValue<string>("ApiSettings:SecretKey");
+var key = Environment.GetEnvironmentVariable("SECRET_KEY");
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -78,9 +82,7 @@ builder.Services.AddSwaggerGen();
 
 
 
-
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {

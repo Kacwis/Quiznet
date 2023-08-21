@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "guUBS6z0+NN3dD+NKrXR4kNZtT9RrgR33qlTlRUY1EEC5+Ud45TsgjJoQagFsS/HVs6ubcv1ASGDLWaxfpKgTA==",
+  "dgSpecHash": "1MhWepZUS60hSIcqpCP8NSfC2JyAGRrUvIzRSxvQn0JArhif6UKvSYy02JvqfMxrBl8VGbV9DoWUQgdG6/Y/Ig==",
   "success": true,
   "projectFilePath": "C:\\Users\\Kacpe\\OneDrive\\Dokumenty\\GitHub\\Quiznet\\quiznet-api\\quiznet-api\\quiznet-api.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\Kacpe\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Kacpe\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\Kacpe\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
+    "C:\\Users\\Kacpe\\.nuget\\packages\\dotenv.net\\3.1.2\\dotenv.net.3.1.2.nupkg.sha512",
     "C:\\Users\\Kacpe\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Kacpe\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.9\\microsoft.aspnetcore.authentication.jwtbearer.7.0.9.nupkg.sha512",
     "C:\\Users\\Kacpe\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.0\\microsoft.aspnetcore.openapi.7.0.0.nupkg.sha512",
