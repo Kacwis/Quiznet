@@ -21,9 +21,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install 
+        working-directory: quzinet-app
         
       - name: Run React tests
-        run: npm test ./quiznet-app
+        run: npm test
+        working-directory: quzinet-app
 
   dotnet-tests:
     name: Run .NET API Tests
