@@ -71,7 +71,7 @@ namespace quiznet_api.Services
             }
             var allPotentialPlayers =
                 await _playerRepository.GetAllAsync(p => p.Id != player.Id && p.LastOnline > DateTime.Now.AddDays(-2));
-            var potentialOpponent = allPotentialPlayers.FirstOrDefault(p => !ArePlayersHaveCurrentGame(player, p));
+            var potentialOpponent = allPotentialPlayers.FirstOrDefault<Player>(p => !ArePlayersHaveCurrentGame(player, p));
             if (potentialOpponent == null)
             {
                 return null;    
