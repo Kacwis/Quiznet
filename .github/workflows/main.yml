@@ -3,7 +3,7 @@ name: Unit Tests
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   react-tests:
