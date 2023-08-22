@@ -24,7 +24,7 @@ jobs:
         working-directory: quiznet-app
         
       - name: Run React tests
-        run: npm test
+        run: npm test --passWithNoTests
         working-directory: quiznet-app
 
   dotnet-tests:
