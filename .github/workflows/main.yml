@@ -20,10 +20,10 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install quiznet-app
+        run: npm install 
         
       - name: Run React tests
-        run: npm test quiznet-app
+        run: npm test ./quiznet-app
 
   dotnet-tests:
     name: Run .NET API Tests
