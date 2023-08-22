@@ -39,7 +39,7 @@ jobs:
           dotnet-version: '5.0.x'
 
       - name: Build .NET solution
-        run: dotnet build quiznet-api/quiznet-api/sln
+        run: dotnet build quiznet-api/quiznet-api.sln
 
       - name: Run .NET tests
         run: dotnet test quiznet-api/quiznet-api/quiznet-api.csproj
