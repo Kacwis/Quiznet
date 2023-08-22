@@ -9,9 +9,6 @@ const AccountSettings = () => {
 			<Avatar />
 			<div className={style["account-options"]}>
 				<Username />
-				<div className={style.email}>
-					<label>janek@wp.pl</label>
-				</div>
 				<Password />
 			</div>
 		</div>

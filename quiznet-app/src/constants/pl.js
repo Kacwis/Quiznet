@@ -23,6 +23,12 @@ export const DICTIONARY = {
 	passwordsError: "Podane hasła nie są takie same!",
 	rePassword: "Powtórz hasło",
 	playersUsername: "Nazwa gracza",
+	edit: "Edytuj",
+	friends: "Znajomi",
+	chooseNewAvatar: "Wybierz nowy avatar",
+	newPassword: "Nowe hasło",
+	newUsername: "Nowa nazwa",
+	usernameTaken: "Nazwa jest już zajęta. Spróbuj inną",
 	monthsNamesShort: [
 		"Sty",
 		"Lut",

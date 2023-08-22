@@ -14,7 +14,7 @@ const Avatar = () => {
 
 	const { loggedUser, token, getMenuData } = useContext(AuthContext);
 
-	const { activeLang } = useContext(LanguageContext);
+	const { activeLang, dictionary } = useContext(LanguageContext);
 
 	const avatarPath = getAvatarPathByNumber(loggedUser.avatarId);
 
@@ -76,7 +76,7 @@ const Avatar = () => {
 			</div>
 			{isEditAvatarVisible && (
 				<div className={style["avatar-edit"]}>
-					<h4>Choose new Avatar</h4>
+					<h4>{dictionary.chooseNewAvatar}</h4>
 					<ul>{avatarsListContent}</ul>
 					{selectedAvatar !== null && (
 						<button onClick={applyClickHandler} className={style["apply-btn"]}>

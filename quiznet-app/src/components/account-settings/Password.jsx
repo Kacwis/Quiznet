@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import style from "./Settings.module.css";
 import EditButton from "./EditButton";
+import LanguageContext from "../../store/language-context";
 
 const Password = () => {
 	const [isPasswordEditVisible, setIsPasswordEditVisible] = useState(false);
@@ -10,6 +11,8 @@ const Password = () => {
 
 	const passwordRef = useRef();
 	const rePasswordRef = useRef();
+
+	const { dictionary } = useContext(LanguageContext);
 
 	const passwordInputChangeHandler = () => {
 		if (passwordRef.current) setNewPassword(passwordRef.current.value);
@@ -21,7 +24,7 @@ const Password = () => {
 
 	const applyClickHandler = () => {};
 
-	useEffect(() => {		
+	useEffect(() => {
 		if (newPassword.length > 0 && newRePassword.length > 0) {
 			setArePasswordsEmpty(false);
 		} else {
@@ -42,13 +45,13 @@ const Password = () => {
 					<input
 						type={"password"}
 						ref={passwordRef}
-						placeholder={"New password"}
+						placeholder={dictionary.newPassword}
 						onChange={passwordInputChangeHandler}
 					/>
 					<input
 						type={"password"}
 						ref={rePasswordRef}
-						placeholder={"Retype new password"}
+						placeholder={dictionary.rePassword}
 						onChange={rePasswordInputChangeHandler}
 					/>
 					{newPassword !== newRePassword && <p>Passwords are not the same!</p>}

@@ -58,6 +58,7 @@ namespace quiznet_api.Services
                 User = registeredUser,
                 Score = 0,
                 LastOnline = DateTime.Now,
+                AvatarId = 1,
             };
             await _playerRepository.CreateAsync(player);
             await _playerRepository.SaveAsync();

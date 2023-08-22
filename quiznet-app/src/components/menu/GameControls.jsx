@@ -26,8 +26,6 @@ const GameControls = () => {
 		sendRequest(requestData);
 	};
 
-	const playWithFriendClickHandler = () => {};
-
 	useEffect(() => {
 		if (status === "completed" && !error) {
 			if (!data) {
@@ -47,16 +45,14 @@ const GameControls = () => {
 	return (
 		<div className={style["game-controls"]}>
 			{isErrorVisible && (
-				<p className={style["player-not-found"]}>There are currently no available players to play</p>
+				<p className={style["player-not-found"]}>
+					There are currently no available players to play
+				</p>
 			)}
 			<div className={style["logged-options"]}>
 				<GameControlsButton
 					text={dictionary.searchRandom}
 					clickHandler={randomGameClickHandler}
-				/>
-				<GameControlsButton
-					text={dictionary.playWithFriend}
-					clickHandler={playWithFriendClickHandler}
 				/>
 			</div>
 		</div>

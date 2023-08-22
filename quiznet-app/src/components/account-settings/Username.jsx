@@ -4,6 +4,7 @@ import AuthContext from "../../store/auth-context";
 import EditButton from "./EditButton";
 import useHttp from "../../hooks/use-http";
 import { getMenuData, updateUsername } from "../../api";
+import LanguageContext from "../../store/language-context";
 
 const Username = () => {
 	const [isUsernameEditVisible, setIsUsernameEditVisible] = useState(false);
@@ -11,6 +12,8 @@ const Username = () => {
 	const [isUsernameUsed, setIsUsernameUsed] = useState(false);
 
 	const { loggedUser, token, getMenuData } = useContext(AuthContext);
+
+	const { dictionary } = useContext(LanguageContext);
 
 	const usernameRef = useRef();
 
@@ -65,12 +68,12 @@ const Username = () => {
 				<div className={style["username-edit"]}>
 					<input
 						type={"text"}
-						placeholder={"new username"}
+						placeholder={dictionary.newUsername}
 						ref={usernameRef}
 						onChange={inputChangeHandler}
 					/>
 					{isUsernameUsed && (
-						<p style={{ color: "red" }}>Username already exists. Try other</p>
+						<p style={{ color: "red" }}>{dictionary.usernameTaken}</p>
 					)}
 					{usernameRef.current &&
 						usernameRef.current.value.trim().length !== 0 && (

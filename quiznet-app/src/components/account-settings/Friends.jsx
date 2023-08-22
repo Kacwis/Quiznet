@@ -3,6 +3,7 @@ import style from "./Settings.module.css";
 import AuthContext from "../../store/auth-context";
 
 import FriendListItem from "./FriendListItem";
+import LanguageContext from "../../store/language-context";
 
 const DEFAULT_RESPONSE_MSG_STATE = {
 	message: "",
@@ -16,6 +17,8 @@ const Friends = () => {
 		DEFAULT_RESPONSE_MSG_STATE
 	);
 	const { menuData } = useContext(AuthContext);
+
+	const { dictionary } = useContext(LanguageContext);
 
 	const showResponseMessage = (msg, isPositive) => {
 		const newClassname = `${currentResponseMsg.className} ${
@@ -55,7 +58,7 @@ const Friends = () => {
 
 	return (
 		<div className={style.friends}>
-			<h3>Friends</h3>
+			<h3>{dictionary.friends}</h3>
 			<p className={currentResponseMsg.className}>
 				{currentResponseMsg.message}
 			</p>
