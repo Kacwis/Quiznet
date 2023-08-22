@@ -16,8 +16,6 @@ const FirstHalf = ({ setCategory, category }) => {
 	const { activeGame, activeRound, stopRound, savePlayedRound } =
 		useContext(GameContext);
 
-	const navigate = useNavigate();
-
 	const { status, error, data, sendRequest } = useHttp(
 		getThreeRandomQuestionByCategory
 	);
@@ -38,9 +36,7 @@ const FirstHalf = ({ setCategory, category }) => {
 		}
 	}, [status, data, error]);
 
-	const saveAnswers = () => {
-		console.log("saving first");
-		console.log(activeRound, activeGame);
+	const saveAnswers = () => {	
 		savePlayedRound();
 		stopRound();
 	};

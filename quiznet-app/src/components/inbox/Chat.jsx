@@ -49,7 +49,6 @@ const Chat = ({ receiverId }) => {
 
 	useEffect(() => {
 		if (status === "completed" && !error) {
-			console.log(data);
 			data.messages.reverse();
 			if (chatWindowRef.current && data.messages !== chatData.messages) {
 				chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
@@ -89,7 +88,7 @@ const Chat = ({ receiverId }) => {
 
 	const sendClickHandler = () => {
 		const msg = msgInputRef.current.value;
-		console.log(msg);
+
 		if (msg.length === 0 || msg.trim(" ").length === 0) {
 			return;
 		}
@@ -106,7 +105,6 @@ const Chat = ({ receiverId }) => {
 			sendRequest({ token, receiverId });
 		}, 200);
 		const data = sendMessage(requestData);
-		console.log(data);
 	};
 
 	return (

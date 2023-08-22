@@ -12,8 +12,7 @@ const Questions = ({ questions, saveAnswers }) => {
 
 	const nextQuestion = (previousQuestionAnswer) => {
 		gameContext.activeRound.playerAnswers.push(previousQuestionAnswer);
-		console.log(gameContext.activeRound.playerAnswers);
-		console.log(questionIndex);
+		
 		const currentQuestionCounter = questionIndex + 1;
 		if (currentQuestionCounter > 2) {
 			saveAnswers();

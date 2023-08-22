@@ -11,8 +11,6 @@ const PlayersInfo = ({ players }) => {
 
 	const { activeGame } = useContext(GameContext);
 
-	console.log(activeGame);
-
 	const player = players.find((p) => +p.id === +authContext.loggedUser.id);
 	const opponent = players.find((p) => +p.id !== +authContext.loggedUser.id);
 

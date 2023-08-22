@@ -19,7 +19,6 @@ const RankingPlace = ({ player, openInbox, index }) => {
 	const navigate = useNavigate();
 
 	let placeNumberClassname;
-	console.log(index);
 	switch (index + 1) {
 		case 1:
 			placeNumberClassname = style["first-place"];

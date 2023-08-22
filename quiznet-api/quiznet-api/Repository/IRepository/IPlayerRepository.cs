@@ -1,5 +1,4 @@
-﻿using quiznet_api.Model;
-using quiznet_api.Models;
+﻿using quiznet_api.Models;
 
 namespace quiznet_api.Repository.IRepository
 {

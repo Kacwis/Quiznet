@@ -22,8 +22,7 @@ const SecondHalf = () => {
 	}
 
 	const saveAnswers = () => {
-		console.log("saving second");
-		console.log(activeRound, activeGame);
+		
 		savePlayedRound();
 		if (activeGame.rounds.length === 5) {
 			stopRound();

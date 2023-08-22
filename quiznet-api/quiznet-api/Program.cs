@@ -30,7 +30,6 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 // Repositories
 
-builder.Services.AddScoped<IWordRepository, WordRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

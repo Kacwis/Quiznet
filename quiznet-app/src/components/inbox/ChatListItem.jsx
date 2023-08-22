@@ -15,11 +15,8 @@ const ChatListItem = ({ chat, chatClickHandler }) => {
 		text = `${username} ${dictionary.friendInviteText}`;
 	}
 
-	console.log(chat.chatReceiver);
-
 	const avatarPath = getAvatarPathByNumber(chat.chatReceiver.avatarId);
-	console.log(avatarPath);
-
+	
 	return (
 		<li key={username}>
 			<div

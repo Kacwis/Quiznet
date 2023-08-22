@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import style from "./Game.module.css";
 import PropTypes from "prop-types";
 import SecondHalf from "./SecondHalf";
 import FirstHalf from "./FirstHalf";

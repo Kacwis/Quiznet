@@ -2,13 +2,11 @@ import Modal from "../ui/Modal";
 import style from "./Inbox.module.css";
 import pt from "prop-types";
 import useHttp from "../../hooks/use-http";
-import LoadingSpinner from "../ui/LoadingSpinner";
 import { getChatsList } from "../../api";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
 import ChatsList from "./ChatsList";
 import Chat from "./Chat";
-import { faTableCellsLarge } from "@fortawesome/free-solid-svg-icons";
 
 const CHAT_LIST_REQUEST_REFRESH_TIME_MILISECONDS = 1000 * 15;
 
@@ -40,9 +38,7 @@ const Inbox = ({ closeInbox, chatPlayerId }) => {
 	useEffect(() => {
 		if (status === "completed" && !error) {
 			setChatsList(data);
-			const chat = data.filter((chat) => chat.chatReceiver.id === chatPlayerId);
-			console.log(chat);
-			console.log(chatPlayerId);
+			const chat = data.filter((chat) => chat.chatReceiver.id === chatPlayerId);			
 			if (chatPlayerId) {
 				if (chat.length > 0) {
 					setCurrentChat(chat[0]);

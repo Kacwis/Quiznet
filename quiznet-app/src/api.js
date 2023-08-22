@@ -13,7 +13,6 @@ const sendHttpGetRequest = async (url) => {
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
-	console.log(data);
 	return data.result;
 };
 
@@ -30,7 +29,7 @@ export const logIn = async (loginDTO) => {
 	if (!response.ok) {
 		throw new Error("Something went horribly wrong!!");
 	}
-	console.log(data);
+
 	return data;
 };
 
@@ -42,7 +41,7 @@ export const startGameWithRandom = async (requestData) => {
 		},
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (data.statusCode === 404) {
 		return null;
 	}
@@ -97,7 +96,7 @@ export const getMenuData = async (requestData) => {
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
-	console.log(data, "menuData");
+
 	return data.result;
 };
 
@@ -115,7 +114,7 @@ export const savePlayedRound = async (saveData) => {
 		dataToStringify = round;
 		url = `${GAME_URL}${gameId}/round`;
 	}
-	console.log(saveData);
+
 	const response = await fetch(url, {
 		method: method,
 		headers: {
@@ -126,10 +125,9 @@ export const savePlayedRound = async (saveData) => {
 	});
 	const data = await response.json();
 	if (!response.ok) {
-		console.log(data);
 		throw new Error(data.errorMessages);
 	}
-	console.log(data);
+
 	return data.result;
 };
 
@@ -145,7 +143,7 @@ export const findPotentialFriends = async (requestData) => {
 		},
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -163,7 +161,7 @@ export const addFriend = async (requestData) => {
 		body: JSON.stringify(friendshipDTO),
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -178,7 +176,7 @@ export const getChatsList = async (requestData) => {
 		},
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -193,7 +191,7 @@ export const getChat = async (requestData) => {
 		},
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -211,7 +209,7 @@ export const sendMessage = async (requestData) => {
 		body: JSON.stringify(messageDTO),
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -229,7 +227,7 @@ export const sendFriendshipDecision = async (requestData) => {
 		body: JSON.stringify(friendshipDecisionDTO),
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -246,7 +244,7 @@ export const startGameWithFriend = async (requestData) => {
 		body: JSON.stringify(createFriendGameDto),
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -262,7 +260,7 @@ export const updateIsReadMessages = async (requestData) => {
 		},
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -278,7 +276,7 @@ export const signUp = async (requestData) => {
 		body: JSON.stringify(postData),
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!response.ok) {
 		throw new Error(data.errorMessages);
 	}
@@ -295,7 +293,7 @@ export const updateAvatarId = async (requestData) => {
 		},
 	});
 	const data = await response.json();
-	console.log(data);
+
 	if (!data.isSuccess) {
 		throw new Error(data.errorMessages);
 	}

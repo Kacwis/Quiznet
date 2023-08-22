@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using quiznet_api.Model;
 using quiznet_api.Models;
 
 namespace quiznet_api.Data
@@ -57,9 +56,7 @@ namespace quiznet_api.Data
                 .OnDelete(DeleteBehavior.NoAction);
             
         }
-
-        public DbSet<WordTranslation> WordTranslations { get; set; }
-
+        
         public DbSet<User> Users { get; set; }
 
         public DbSet<Player> Players { get; set; }  

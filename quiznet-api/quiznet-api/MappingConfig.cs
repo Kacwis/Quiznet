@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using quiznet_api.Model;
 using quiznet_api.Models;
 using quiznet_api.Models.DTO;
 
@@ -9,7 +8,7 @@ namespace quiznet_api
     {
         public MappingConfig()
         {
-            CreateMap<WordTranslation, WordCreateDTO>().ReverseMap();
+            
             CreateMap<User, LogInUserResponseDTO>().ReverseMap();
             CreateMap<Category, CreateCategoryDTO>().ReverseMap();
             CreateMap<Answer, CreateAnswerDTO>().ReverseMap();

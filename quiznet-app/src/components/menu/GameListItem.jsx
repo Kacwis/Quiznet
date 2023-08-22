@@ -14,7 +14,6 @@ import LanguageContext from "../../store/language-context";
 
 const GameListItem = ({ game }) => {
 	const { loggedUser } = useContext(AuthContext);
-	console.log(game);
 
 	const { dictionary } = useContext(LanguageContext);
 

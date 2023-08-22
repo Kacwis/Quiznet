@@ -21,8 +21,7 @@ const Password = () => {
 
 	const applyClickHandler = () => {};
 
-	useEffect(() => {
-		console.log(newPassword, newRePassword);
+	useEffect(() => {		
 		if (newPassword.length > 0 && newRePassword.length > 0) {
 			setArePasswordsEmpty(false);
 		} else {

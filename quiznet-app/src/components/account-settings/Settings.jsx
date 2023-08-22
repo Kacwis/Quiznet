@@ -8,8 +8,7 @@ import pt from "prop-types";
 import Friends from "./Friends";
 
 const Settings = ({ closeSettings }) => {
-	const { loggedUser } = useContext(AuthContext);
-
+	
 	return (
 		<Modal className={style.main}>
 			<div className={style.settings}>
